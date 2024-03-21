@@ -21,4 +21,11 @@ from base_app.views import index_page
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index_page),
+    path('about/', index_page, name='about'),
+    path('contact/', index_page, name='contact'),
+    path('video/', index_page, name='video'),
+    path('thumbnail/', index_page, name='thumbnail'),
+    path('audio/', index_page, name='audio'),
+    path('subtitles/', index_page, name='subtitles'),
+    path('metadata/', index_page, name='metadata'),
 ]
