@@ -17,15 +17,12 @@
     <p>{{ title }}</p>
     <p>{{ description }}</p>
     <p>{{ keywords }}</p>
-{#    <a href="{{ download_video }}">Download video</a>#}
-{#    <a href="{{ download_thumbnail }}">Download thumbnail</a>#}
-{#    <a href="{{ download_audio }}">Download audio</a>#}
+
     {% if request.method == "POST" %}
         <a href="{{ download_video }}">Download video</a>
         <a href="{{ download_thumbnail }}">Download thumbnail</a>
         <a href="{{ download_audio }}">Download audio</a>
     {% endif %}
-
 
 </body>
 </html>
