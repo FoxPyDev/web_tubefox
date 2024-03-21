@@ -6,11 +6,13 @@
 </head>
 <body>
     <h1>TubeFox</h1>
-    <input title="test">
-    <button>Get Data</button>
-
-    {% for i in data %}
-        <h3>{{ i.name }}<br></h3>
-    {% endfor %}
+    <form method="POST" action="">
+        <label for="yt_link">Paste YouTube video link:</label>
+        <br>
+        <input type="text" id="yt_link" name="yt_link" required>
+        <br>
+        <input type="submit" value="Download">
+        {% csrf_token %}
+    </form>
 </body>
 </html>
