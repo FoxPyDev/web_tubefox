@@ -1,6 +1,4 @@
 from django.shortcuts import render
-from base_app.models import Workers
-from django.http import HttpResponse
 from tubefox import TubeFox
 
 
@@ -22,4 +20,8 @@ def index_page(request):
                       )
     elif request.method == "GET":
         return render(request, 'index.html')
+
+
+def bootstrap_page(request):
+    return render(request, 'bootstrap.html')
 
