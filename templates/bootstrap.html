@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bootstrap</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <header class="d-flex justify-content-center py-3">
+          <ul class="nav nav-pills">
+            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Download video</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Download thumbnail</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Download audio</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Download metadata</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Download subtitles</a></li>
+          </ul>
+        </header>
+    </div>
+
+    <div class="ads" align="center" style="background: aqua">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1234567890123456" crossorigin="anonymous"></script>
+        <!-- Homepage Leaderboard -->
+        <ins class="adsbygoogle"
+        style="display:inline-block;width:728px;height:90px"
+        data-ad-client="ca-pub-1234567890123456"
+        data-ad-slot="1234567890"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <div class="form" align="center" style="height: 300px">
+        <form method="POST" action="">
+        <label for="yt_link">Paste YouTube video link:</label>
+        <br>
+            <style>
+                .form-control {
+                    width: 400px; /* Призначити ширину відповідно до вмісту */
+                    display: inline-block; /* Розмістити елементи в одному ряду */
+                    vertical-align: top; /* Вирівняти елементи вертикально */
+                }
+                .form label {
+                    display: block; /* Розмістити мітки на окремих рядках */
+                    text-align: center; /* Вирівняти текст міток по правому краю */
+                    margin-right: 10px; /* Додати відступ між міткою і вводом */
+                }
+                .footer {
+                    position: fixed;
+                    bottom: 0;
+                    width: 100%; /* Розширити контейнер на всю ширину */
+                    background-color: #fff; /* Опціонально: задати колір фону */
+                    border-top: 1px solid #ddd; /* Опціонально: додати верхню границю */
+                    padding: 10px; /* Опціонально: додати відступи */
+                    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1); /* Опціонально: додати тінь */
+                }
+            </style>
+        <input class="form-control" type="text" id="yt_link" name="yt_link" required>
+        <input class="btn btn-primary" type="submit" value="Download">
+        {% csrf_token %}
+        </form>
+    </div>
+    <div class="ads" align="center" style="background: aqua">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1234567890123456" crossorigin="anonymous"></script>
+        <!-- Homepage Leaderboard -->
+        <ins class="adsbygoogle"
+        style="display:inline-block;width:728px;height:90px"
+        data-ad-client="ca-pub-1234567890123456"
+        data-ad-slot="1234567890"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+</body>
+</html>
