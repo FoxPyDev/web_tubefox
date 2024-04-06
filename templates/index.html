@@ -22,6 +22,11 @@
         <a href="{{ download_video }}">Download video</a>
         <a href="{{ download_thumbnail }}">Download thumbnail</a>
         <a href="{{ download_audio }}">Download audio</a>
+        <form method="POST" action="{% url 'download_video' %}">
+            <input type="hidden" name="download_video" value="{{ download_video }}">
+            <button type="submit">Download video</button>
+            {% csrf_token %}
+        </form>
     {% endif %}
 
 </body>
