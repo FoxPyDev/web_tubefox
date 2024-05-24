@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
 </head>
 <body>
-    <div class="container-flex">
+    <div class="container">
         <header class="d-flex justify-content-center py-3 ">
           <ul class="nav nav-pills">
             <li class="nav-item"><a href="/bootstrap" class="nav-link" aria-current="page">Download video</a></li>
-            <li class="nav-item"><a href="/thumbnail" class="nav-link active">Download thumbnail</a></li>
+            <li class="nav-item"><a href="/thumbnail" class="nav-link">Download thumbnail</a></li>
             <li class="nav-item"><a href="/metadata" class="nav-link">Download metadata</a></li>
-            <li class="nav-item"><a href="/subtitles" class="nav-link">Download subtitles</a></li>
+            <li class="nav-item"><a href="/subtitles" class="nav-link active">Download subtitles</a></li>
           </ul>
         </header>
     </div>
@@ -31,7 +31,7 @@
         </script>
     </div>
 
-    <div class="form" align="center" style="height: 120px; background: aliceblue">
+    <div class="form" align="center" style="height: 120px">
         <form method="POST" action="">
         <label for="yt_link">Paste YouTube video link:</label>
         <br>
@@ -57,16 +57,12 @@
 
 
     {% if request.method == "POST" %}
-        <div class="container-flex" style="background: aliceblue">
-        <div class="col-8 mx-auto" style="margin-bottom: 40px">
-            <div id="carouselExample" class="carousel slide">
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img src="{{download_thumbnail}}" class="d-block w-100" alt="Youtube video thumbnail">
+        <div class="container">
+            <div class="conrainer">
+                <div class="row">
+                    <p>{{ title }}</p>
                 </div>
-              </div>
             </div>
-        </div>
         </div>
 
     {% endif %}
@@ -74,7 +70,7 @@
 
     <div class="container">
         <div class="row" style="text-align: center">
-            <h3>How to Download YouTube Video Thumbnail</h3>
+            <h3>How to Download YouTube Subtitles</h3>
                 <div class="col-4" style="text-align: left">
                     <div class="row">
                         <div class="col-3" style="margin-top: 7px">
@@ -115,7 +111,7 @@
 
     </div>
 
-    <div class="container" style="background: aliceblue">
+    <div class="container">
         <div class="row" style="text-align: center">
             <h3>Why TubeFox the best YouTube Video downloader?</h3>
         </div>

@@ -102,3 +102,19 @@ def thumbnail_page(request):
             return render(request, 'thumbnail.html')
     elif request.method == "GET":
         return render(request, 'thumbnail.html')
+
+
+def subtitles_page(request):
+    if request.method == "POST":
+        data = request.POST
+        try:
+            yt_object = TubeFox(data['yt_link'])
+            return render(request, 'subtitles.html',
+                          {'title': yt_object.title,
+                           'txt_subtitles': yt_object,
+                           'srt_subtitles': yt_object}
+                          )
+        except:
+            return render(request, 'subtitles.html')
+    elif request.method == "GET":
+        return render(request, 'subtitles.html')
