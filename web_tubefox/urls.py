@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from base_app.views import index_page, bootstrap_page, download_video
+from base_app.views import index_page, bootstrap_page, download_video, metadata_page, thumbnail_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,10 +24,11 @@ urlpatterns = [
     path('about/', index_page, name='about'),
     path('contact/', index_page, name='contact'),
     path('video/', index_page, name='video'),
-    path('thumbnail/', index_page, name='thumbnail'),
+    path('thumbnail/', thumbnail_page, name='thumbnail'),
     path('audio/', index_page, name='audio'),
     path('subtitles/', index_page, name='subtitles'),
-    path('metadata/', index_page, name='metadata'),
+    path('metadata/', metadata_page, name='metadata'),
     path('bootstrap/', bootstrap_page, name='bootstrap'),
     path('download_video/', download_video, name='download_video'),
+    path('download_muted_video/', download_video, name='download_muted_video'),
 ]

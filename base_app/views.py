@@ -71,3 +71,34 @@ def download_video(request):
                 return response
 
         return HttpResponse("Reload page and try again")
+
+def metadata_page(request):
+    if request.method == "POST":
+        data = request.POST
+        try:
+            yt_object = TubeFox(data['yt_link'])
+            return render(request, 'metadata.html',
+                          {'title': yt_object.title,
+                           'description': yt_object.description,
+                           'keywords': yt_object.keywords,
+                           }
+                          )
+        except:
+            return render(request, 'metadata.html')
+    elif request.method == "GET":
+        return render(request, 'metadata.html')
+
+def thumbnail_page(request):
+    if request.method == "POST":
+        data = request.POST
+        try:
+            yt_object = TubeFox(data['yt_link'])
+            return render(request, 'thumbnail.html',
+                          {'title': yt_object.title,
+                           'download_thumbnail': yt_object.web_collected_data.collect_thumbnail_links()
+                           [max(yt_object.web_collected_data.collect_thumbnail_links().keys())]}
+                          )
+        except:
+            return render(request, 'thumbnail.html')
+    elif request.method == "GET":
+        return render(request, 'thumbnail.html')

@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container-flex">
         <header class="d-flex justify-content-center py-3 ">
           <ul class="nav nav-pills">
-            <li class="nav-item"><a href="/bootstrap" class="nav-link active" aria-current="page">Download video</a></li>
-            <li class="nav-item"><a href="/thumbnail" class="nav-link">Download thumbnail</a></li>
+            <li class="nav-item"><a href="/bootstrap" class="nav-link" aria-current="page">Download video</a></li>
+            <li class="nav-item"><a href="/thumbnail" class="nav-link active">Download thumbnail</a></li>
             <li class="nav-item"><a href="/metadata" class="nav-link">Download metadata</a></li>
             <li class="nav-item"><a href="#" class="nav-link">Download subtitles</a></li>
           </ul>
@@ -31,7 +31,7 @@
         </script>
     </div>
 
-    <div class="form" align="center" style="height: 120px">
+    <div class="form" align="center" style="height: 120px; background: aliceblue">
         <form method="POST" action="">
         <label for="yt_link">Paste YouTube video link:</label>
         <br>
@@ -57,27 +57,16 @@
 
 
     {% if request.method == "POST" %}
-        <div class="d-flex justify-content-center align-items-center center-container">
-            <div class="card" style="width: 550px; margin-bottom: 20px">
-                <div class="row g-0">
-                    <!-- Зображення -->
-                    <div class="col-md-4">
-                        <img src="{{ download_thumbnail }}" class="img-fluid rounded-start" alt="Video thumbnail" id="video-thumbnail">
-                    </div>
-
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <p class="card-title">{{title}}</p>
-                                <form method="POST" action="{% url 'download_video' %}">
-                                {% csrf_token %}
-                                <input type="hidden" name="download_video" value="{{ download_video }}">
-                                <button class="btn btn-primary btn-sm me-2" type="submit" name="quality" value="720p">
-                                        Download in 720p</button>
-                                </form>
-                        </div>
-                    </div>
+        <div class="container-flex" style="background: aliceblue">
+        <div class="col-8 mx-auto" style="margin-bottom: 40px">
+            <div id="carouselExample" class="carousel slide">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="{{download_thumbnail}}" class="d-block w-100" alt="Youtube video thumbnail">
                 </div>
+              </div>
             </div>
+        </div>
         </div>
 
     {% endif %}
@@ -85,7 +74,7 @@
 
     <div class="container">
         <div class="row" style="text-align: center">
-            <h3>How to Download YouTube Videos</h3>
+            <h3>How to Download YouTube Video Thumbnail</h3>
                 <div class="col-4" style="text-align: left">
                     <div class="row">
                         <div class="col-3" style="margin-top: 7px">
@@ -126,7 +115,7 @@
 
     </div>
 
-    <div class="container">
+    <div class="container-flex" style="background: aliceblue">
         <div class="row" style="text-align: center">
             <h3>Why TubeFox the best YouTube Video downloader?</h3>
         </div>
