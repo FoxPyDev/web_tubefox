@@ -57,10 +57,20 @@
 
 
     {% if request.method == "POST" %}
-        <div class="container">
-            <div class="conrainer">
-                <div class="row">
+        <div class="container-flex">
+            <div class="container">
+                <div class="row" style="text-align: center">
                     <p>{{ title }}</p>
+                </div>
+                <div class="container col-8">
+                    {% for language, link in subtitles_list %}
+                        <ul class="list-group list-group-horizontal">
+                          <li class="list-group-item col-6">{{ language }}</li>
+                          <li class="list-group-item col-2"><a class="btn btn-primary btn-sm" href="#" role="button">Download in TXT</a></li>
+                          <li class="list-group-item col-2"><a class="btn btn-primary btn-sm" href="#" role="button">Download in SRT</a></li>
+                          <li class="list-group-item col-2"><a class="btn btn-primary btn-sm" href="{{ link }}" role="button" target="_blank">Open XML page</a></li>
+                        </ul>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -69,7 +79,7 @@
 
 
     <div class="container">
-        <div class="row" style="text-align: center">
+        <div class="row" style="text-align: center; margin-top: 40px">
             <h3>How to Download YouTube Subtitles</h3>
                 <div class="col-4" style="text-align: left">
                     <div class="row">

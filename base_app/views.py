@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse
 import requests
 from tubefox import TubeFox
 from tubefox.yt_app_version_updater import get_yt_app_latest_version
+from tubefox.subtitles import Subtitles
 
 
 def index_page(request):
@@ -81,10 +82,12 @@ def metadata_page(request):
                           {'title': yt_object.title,
                            'description': yt_object.description,
                            'keywords': yt_object.keywords,
+                           'status': 'ok'
                            }
                           )
         except:
-            return render(request, 'metadata.html')
+            return render(request, 'metadata.html',
+                          {'status': 'no info'})
     elif request.method == "GET":
         return render(request, 'metadata.html')
 
@@ -109,11 +112,13 @@ def subtitles_page(request):
         data = request.POST
         try:
             yt_object = TubeFox(data['yt_link'])
-            return render(request, 'subtitles.html',
-                          {'title': yt_object.title,
-                           'txt_subtitles': yt_object,
-                           'srt_subtitles': yt_object}
-                          )
+            all_subtitles = yt_object.web_collected_data.collect_subtitles_links()
+
+            # Перетворюємо словник у список пар (ключ, значення)
+            subtitles_list = list(all_subtitles.items())
+
+            return render(request, 'subtitles.html', {'title': yt_object.title,
+                                                      'subtitles_list': subtitles_list})
         except:
             return render(request, 'subtitles.html')
     elif request.method == "GET":
