@@ -68,16 +68,16 @@
         <div class="container">
             <div class="container col-8">
                 <div class="card" style="margin-top: 20px">
-                    <button class="btn btn-outline-primary copy-btn btn-sm" onclick="copyToClipboard('{{ title }}')"><i class="bi bi-copy"></i></button>
-                    <pre style="margin: 10px">{{ title }}</pre>
-                </div>
-                <div class="card" style="margin-top: 20px; height: 300px">
-                    <button class="btn btn-outline-primary copy-btn btn-sm" onclick="copyToClipboard('{{ description }}')"><i class="bi bi-copy"></i></button>
-                    <pre style="margin: 10px">{{ description }}</pre>
+                    <button class="btn btn-primary copy-btn btn-sm" onclick="copyToClip(document.getElementById('title').innerHTML)"><i class="bi bi-copy"></i></button>
+                    <pre style="margin: 10px" id="title">{{ title }}</pre>
                 </div>
                 <div class="card" style="margin-top: 20px">
-                    <button class="btn btn-outline-primary copy-btn btn-sm" onclick="copyToClipboard('{{ keywords }}')"><i class="bi bi-copy"></i></button>
-                    <p style="margin: 10px">{{ keywords }}</p>
+                    <button class="btn btn-primary copy-btn btn-sm" onclick="copyToClip(document.getElementById('description').innerHTML)"><i class="bi bi-copy"></i></button>
+                    <pre style="margin: 10px" id="description">{{ description }}</pre>
+                </div>
+                <div class="card" style="margin-top: 20px">
+                    <button class="btn btn-primary copy-btn btn-sm" onclick="copyToClip(document.getElementById('keywords').innerHTML)"><i class="bi bi-copy"></i></button>
+                    <p style="margin: 10px" id="keywords">{{ keywords }}</p>
                 </div>
             </div>
         </div>
@@ -143,10 +143,16 @@
     </div>
 
     <script>
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(function() {
-            }, function(err) {});
-        }
+        function copyToClip(str) {
+          function listener(e) {
+            e.clipboardData.setData("text/html", str);
+            e.clipboardData.setData("text/plain", str);
+            e.preventDefault();
+          }
+          document.addEventListener("copy", listener);
+          document.execCommand("copy");
+          document.removeEventListener("copy", listener);
+        };
     </script>
 </body>
 </html>
