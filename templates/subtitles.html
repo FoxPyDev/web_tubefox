@@ -66,8 +66,20 @@
                     {% for language, link in subtitles_list %}
                         <ul class="list-group list-group-horizontal">
                           <li class="list-group-item col-6">{{ language }}</li>
-                          <li class="list-group-item col-2"><a class="btn btn-primary btn-sm" href="#" role="button">Download in TXT</a></li>
-                          <li class="list-group-item col-2"><a class="btn btn-primary btn-sm" href="#" role="button">Download in SRT</a></li>
+                            <li class="list-group-item col-2">
+                                <form method="POST" action="{% url 'save_to_txt' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="subtitles_link" value="{{ link }}">
+                                    <button class="btn btn-primary btn-sm" type="submit">Download in TXT</button>
+                                </form>
+                            </li>
+                          <li class="list-group-item col-2">
+                              <form method="POST" action="{% url 'save_to_srt' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="subtitles_link" value="{{ link }}">
+                                    <button class="btn btn-primary btn-sm" type="submit">Download in SRT</button>
+                                </form>
+                          </li>
                           <li class="list-group-item col-2"><a class="btn btn-primary btn-sm" href="{{ link }}" role="button" target="_blank">Open XML page</a></li>
                         </ul>
                     {% endfor %}
@@ -80,7 +92,7 @@
 
     <div class="container">
         <div class="row" style="text-align: center; margin-top: 40px">
-            <h3>How to Download YouTube Subtitles</h3>
+            <h3 style="margin-bottom: 20px">How to Download YouTube Subtitles</h3>
                 <div class="col-4" style="text-align: left">
                     <div class="row">
                         <div class="col-3" style="margin-top: 7px">

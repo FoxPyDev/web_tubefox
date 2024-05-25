@@ -123,3 +123,21 @@ def subtitles_page(request):
             return render(request, 'subtitles.html')
     elif request.method == "GET":
         return render(request, 'subtitles.html')
+
+
+def save_to_txt(request):
+    if request.method == "POST":
+        link = request.POST.get('subtitles_link')
+        txt_content = Subtitles(link).subtitles_to_text
+        response = HttpResponse(txt_content, content_type='text/plain')
+        response['Content-Disposition'] = 'attachment; filename="subtitle.txt"'
+        return response
+
+
+def save_to_srt(request):
+    if request.method == "POST":
+        link = request.POST.get('subtitles_link')
+        txt_content = Subtitles(link).subtitles_to_srt
+        response = HttpResponse(txt_content, content_type='text/plain')
+        response['Content-Disposition'] = 'attachment; filename="subtitle.srt"'
+        return response
