@@ -3,6 +3,8 @@ import requests
 from tubefox import TubeFox
 from tubefox.yt_app_version_updater import get_yt_app_latest_version
 from tubefox.subtitles import Subtitles
+from django.http import StreamingHttpResponse
+
 
 
 def index_page(request):
@@ -16,6 +18,8 @@ def index_page(request):
                            'keywords': yt_object.keywords,
                            'download_video': yt_object.app_collected_data.collect_video_links()
                            [max(yt_object.app_collected_data.collect_video_links().keys())],
+                           'download_muted_video': yt_object.app_collected_data.collect_muted_video_links()
+                           [max(yt_object.app_collected_data.collect_muted_video_links().keys())],
                            'download_thumbnail': yt_object.web_collected_data.collect_thumbnail_links()
                            [max(yt_object.web_collected_data.collect_thumbnail_links().keys())],
                            'download_audio': yt_object.app_collected_data.collect_audio_links()
@@ -26,10 +30,6 @@ def index_page(request):
             return render(request, 'index.html')
     elif request.method == "GET":
         return render(request, 'index.html')
-
-
-# def bootstrap_page(request):
-#     return render(request, 'bootstrap.html')
 
 
 def bootstrap_page(request):
@@ -43,6 +43,8 @@ def bootstrap_page(request):
                            'keywords': yt_object.keywords,
                            'download_video': yt_object.app_collected_data.collect_video_links()
                            [max(yt_object.app_collected_data.collect_video_links().keys())],
+                           'download_muted_video': yt_object.app_collected_data.collect_muted_video_links()
+                           [max(yt_object.app_collected_data.collect_muted_video_links().keys())],
                            'download_thumbnail': yt_object.web_collected_data.collect_thumbnail_links()
                            [max(yt_object.web_collected_data.collect_thumbnail_links().keys())],
                            'download_audio': yt_object.app_collected_data.collect_audio_links()
@@ -67,11 +69,38 @@ def download_video(request):
         if video_response.status_code == 200 and 'Content-Length' in video_response.headers:
             content_length = int(video_response.headers['Content-Length'])
             if content_length > 0:
-                response = HttpResponse(video_response.content, content_type='video/mp4')
+                response = StreamingHttpResponse(
+                    (chunk for chunk in video_response.iter_content(chunk_size=8192)),
+                    content_type='video/mp4'
+                )
                 response['Content-Disposition'] = 'attachment; filename="video.mp4"'
                 return response
 
         return HttpResponse("Reload page and try again")
+
+
+def download_muted_video(request):
+    if request.method == "POST":
+        video_url = request.POST.get('download_muted_video')
+        print(video_url)
+        headers = {
+            'Content-Type': 'application/json',
+            'User-Agent': f'com.google.android.youtube/{get_yt_app_latest_version()} (Linux; U; Android 12; GB) gzip'
+        }
+        video_response = requests.get(video_url, stream=True, headers=headers)
+
+        if video_response.status_code == 200 and 'Content-Length' in video_response.headers:
+            content_length = int(video_response.headers['Content-Length'])
+            if content_length > 0:
+                response = StreamingHttpResponse(
+                    (chunk for chunk in video_response.iter_content(chunk_size=8192)),
+                    content_type='video/mp4'
+                )
+                response['Content-Disposition'] = 'attachment; filename="muted_video.mp4"'
+                return response
+
+        return HttpResponse("Reload page and try again")
+
 
 def metadata_page(request):
     if request.method == "POST":
@@ -90,6 +119,7 @@ def metadata_page(request):
                           {'status': 'no info'})
     elif request.method == "GET":
         return render(request, 'metadata.html')
+
 
 def thumbnail_page(request):
     if request.method == "POST":
@@ -141,3 +171,27 @@ def save_to_srt(request):
         response = HttpResponse(txt_content, content_type='text/plain')
         response['Content-Disposition'] = 'attachment; filename="subtitle.srt"'
         return response
+
+
+def download_thumbnail(request):
+    if request.method == "POST":
+        thumbnail_url = request.POST.get('thumbnail_link')
+
+        headers = {
+            'Content-Type': 'application/json',
+            'User-Agent': f'com.google.android.youtube/{get_yt_app_latest_version()} (Linux; U; Android 12; GB) gzip'
+        }
+
+        try:
+            image_response = requests.get(thumbnail_url, stream=True, headers=headers)
+        except requests.RequestException as e:
+            return render(f"Error fetching the image: {e}")
+
+        if image_response.status_code == 200 and 'Content-Length' in image_response.headers:
+            content_length = int(image_response.headers['Content-Length'])
+            if content_length > 0:
+                content_type = image_response.headers.get('Content-Type', 'image/jpeg')
+                file_extension = content_type.split('/')[-1] if '/' in content_type else 'jpg'
+                response = HttpResponse(image_response.content, content_type=content_type)
+                response['Content-Disposition'] = f'attachment; filename="thumbnail.{file_extension}"'
+                return response
