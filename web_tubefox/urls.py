@@ -22,6 +22,7 @@ from base_app.views import (index_page, bootstrap_page, download_video, metadata
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', bootstrap_page),
+    path('test/', index_page),
     path('thumbnail/', thumbnail_page, name='thumbnail'),
     path('subtitles/', subtitles_page, name='subtitles'),
     path('metadata/', metadata_page, name='metadata'),

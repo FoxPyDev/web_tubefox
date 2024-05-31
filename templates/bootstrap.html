@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <header class="d-flex justify-content-center py-3 ">
+        <header class="d-flex justify-content-center py-3">
           <ul class="nav nav-pills">
             <li class="nav-item"><a href="/bootstrap" class="nav-link active" aria-current="page">Download video</a></li>
             <li class="nav-item"><a href="/thumbnail" class="nav-link">Download thumbnail</a></li>
@@ -68,12 +68,29 @@
                     <div class="col-md-8">
                         <div class="card-body">
                             <p class="card-title">{{title}}</p>
-                                <form method="POST" action="{% url 'download_video' %}">
-                                {% csrf_token %}
-                                <input type="hidden" name="download_video" value="{{ download_video }}">
-                                <button class="btn btn-primary btn-sm me-2" type="submit" name="quality" value="720p">
-                                        Download in 720p</button>
-                                </form>
+                                <style>
+                                    .button-container {
+                                        display: flex;
+                                        gap: 10px; /* Відстань між кнопками */
+                                    }
+                                </style>
+
+                                <div class="button-container">
+                                    <form method="POST" action="{% url 'download_video' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="download_video" value="{{ download_video }}">
+                                        <button class="btn btn-primary btn-sm me-2" type="submit" name="quality" value="720p">
+                                            Download in 720p
+                                        </button>
+                                    </form>
+                                    <form method="POST" action="{% url 'download_video' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="download_video" value="{{ download_muted_video }}">
+                                        <button class="btn btn-primary btn-sm me-2" type="submit" name="quality">
+                                            Download in Max quality
+                                        </button>
+                                    </form>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -83,9 +100,9 @@
     {% endif %}
 
 
-    <div class="container">
-        <div class="row" style="text-align: center">
-            <h3>How to Download YouTube Videos</h3>
+    <div class="container col-8">
+        <div class="row" style="text-align: center; margin-top: 40px">
+            <h3 style="margin-bottom: 20px">How to Download YouTube Subtitles</h3>
                 <div class="col-4" style="text-align: left">
                     <div class="row">
                         <div class="col-3" style="margin-top: 7px">
@@ -126,13 +143,30 @@
 
     </div>
 
-    <div class="container">
-        <div class="row" style="text-align: center">
+    <div class="container col-8">
+        <div class="row" style="text-align: center; margin-top: 40px">
             <h3>Why TubeFox the best YouTube Video downloader?</h3>
         </div>
         <div class="row" style="text-align: center">
             <p>Discover why TubeFox is the ultimate solution for downloading YouTube videos. Our versatile service allows you to download videos in 720p quality with audio or in maximum quality without sound in MP4 format. Need just the audio? Easily download MP3 files. TubeFox also lets you download video thumbnails, subtitles in both TXT and SRT formats, and copy all video metadata including titles, descriptions, and tags. Experience seamless, high-quality downloads with TubeFox—the best YouTube video downloader on the market.</p>
         </div>
+    </div>
+
+    <div class="container" style="margin-top: 40px">
+      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+          <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+            <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+          </a>
+          <span class="mb-3 mb-md-0 text-body-secondary">© 2024 Tubefox.fun</span>
+        </div>
+
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+          <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
+          <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
+          <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
+        </ul>
+      </footer>
     </div>
 
 </body>
