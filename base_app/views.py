@@ -4,7 +4,9 @@ from tubefox import TubeFox
 from tubefox.yt_app_version_updater import get_yt_app_latest_version
 from tubefox.subtitles import Subtitles
 from django.http import StreamingHttpResponse
-
+import moviepy.editor as mp
+from io import BytesIO
+import tempfile
 
 
 def index_page(request):
@@ -195,3 +197,56 @@ def download_thumbnail(request):
                 response = HttpResponse(image_response.content, content_type=content_type)
                 response['Content-Disposition'] = f'attachment; filename="thumbnail.{file_extension}"'
                 return response
+
+
+def audio_page(request):
+    if request.method == "POST":
+        data = request.POST
+        try:
+            yt_object = TubeFox(data['yt_link'])
+            return render(request, 'audio.html',
+                          {'title': yt_object.title,
+                           'download_thumbnail': yt_object.web_collected_data.collect_thumbnail_links()
+                           [max(yt_object.web_collected_data.collect_thumbnail_links().keys())],
+                           'download_video': yt_object.app_collected_data.collect_video_links()
+                           [max(yt_object.app_collected_data.collect_video_links().keys())]}
+                          )
+        except:
+            return render(request, 'audio.html')
+    elif request.method == "GET":
+        return render(request, 'audio.html')
+
+
+def download_audio(request):
+    if request.method == "POST":
+        video_url = request.POST.get('download_video')
+        headers = {
+            'Content-Type': 'application/json',
+            'User-Agent': f'com.google.android.youtube/{get_yt_app_latest_version()} (Linux; U; Android 12; GB) gzip'
+        }
+        video_response = requests.get(video_url, stream=True, headers=headers)
+
+        if video_response.status_code == 200 and 'Content-Length' in video_response.headers:
+            content_length = int(video_response.headers['Content-Length'])
+            if content_length > 0:
+                _, temp_video_path = tempfile.mkstemp(suffix='.mp4')
+                with open(temp_video_path, 'wb') as temp_video:
+                    temp_video.write(video_response.content)
+
+                video = mp.VideoFileClip(temp_video_path)
+
+                # Вибираємо аудіодоріжку з відео
+                audio = video.audio
+
+                # Зберігаємо аудіо у форматі mp3
+                _, temp_audio_path = tempfile.mkstemp(suffix='.mp3')
+                audio.write_audiofile(temp_audio_path, bitrate='320k')
+
+                with open(temp_audio_path, 'rb') as f:
+                    audio_data = f.read()
+
+                response = HttpResponse(audio_data, content_type='audio/mpeg')
+                response['Content-Disposition'] = f'attachment; filename="audio.mp3"'
+                return response
+
+        return HttpResponse("Reload page and try again")

@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from base_app.views import (index_page, bootstrap_page, download_video, metadata_page, thumbnail_page,
-                            subtitles_page, save_to_txt, save_to_srt, download_thumbnail)
+                            subtitles_page, save_to_txt, save_to_srt, download_thumbnail, audio_page, download_audio)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,4 +32,6 @@ urlpatterns = [
     path('save_to_txt/', save_to_txt, name='save_to_txt'),
     path('save_to_srt/', save_to_srt, name='save_to_srt'),
     path('download_thumbnail/', download_thumbnail, name='download_thumbnail'),
+    path('audio/', audio_page, name='download_audio'),
+    path('download_audio/', download_audio, name='download_audio'),
 ]
