@@ -58,6 +58,7 @@
 
 
     {% if request.method == "POST" %}
+        {% if status == "ok" %}
         <div class="container-flex">
             <div class="container">
                 <div class="row" style="text-align: center">
@@ -87,6 +88,14 @@
                 </div>
             </div>
         </div>
+            {% else %}
+            <div class="container col-6">
+                <div class="card" style="text-align: center; margin: 20px; margin-outside: 20px; height: 100px; background-color: lightcoral">
+                    <h4 style="margin-top: 20px"><i class="bi bi-exclamation-triangle"></i> Something went wrong</h4>
+                    <p> Please check the link is correct and the video is available. </p>
+                </div>
+            </div>
+            {% endif %}
 
     {% endif %}
 

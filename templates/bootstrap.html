@@ -58,6 +58,7 @@
 
 
     {% if request.method == "POST" %}
+        {% if status == "ok" %}
         <div class="d-flex justify-content-center align-items-center center-container">
             <div class="card" style="width: 550px; margin-bottom: 20px">
                 <div class="row g-0">
@@ -88,7 +89,7 @@
                                         {% csrf_token %}
                                         <input type="hidden" name="download_video" value="{{ download_muted_video }}">
                                         <button class="btn btn-primary btn-sm me-2" type="submit" name="quality">
-                                            Download in Max quality
+                                            Download <i class="bi bi-volume-mute"></i> in Max quality
                                         </button>
                                     </form>
                                 </div>
@@ -97,13 +98,21 @@
                 </div>
             </div>
         </div>
+            {% else %}
+            <div class="container col-6">
+                <div class="card" style="text-align: center; margin: 20px; margin-outside: 20px; height: 100px; background-color: lightcoral">
+                    <h4 style="margin-top: 20px"><i class="bi bi-exclamation-triangle"></i> Something went wrong</h4>
+                    <p> Please check the link is correct and the video is available. </p>
+                </div>
+            </div>
+            {% endif %}
 
     {% endif %}
 
 
     <div class="container col-8">
         <div class="row" style="text-align: center; margin-top: 40px">
-            <h3 style="margin-bottom: 20px">How to Download YouTube Subtitles</h3>
+            <h3 style="margin-bottom: 20px">How to Download YouTube Video</h3>
                 <div class="col-4" style="text-align: left">
                     <div class="row">
                         <div class="col-3" style="margin-top: 7px">
@@ -112,7 +121,7 @@
                             </svg>
                         </div>
                         <div class="col-9">
-                            <p>Simply enter your desired YouTube link or type in relevant keywords in the search box, then hit "Download"</p>
+                            <p>Just enter the desired YouTube link in the input field and then click "Download"</p>
                         </div>
                     </div>
                 </div>
@@ -124,7 +133,7 @@
                             </svg>
                         </div>
                         <div class="col-9">
-                            <p>Choose your preferred output format (MP4 or MP3) and initiate the transfer process by clicking the "Download" button.</p>
+                            <p>If you need a video in 720p, click on "Download in 720p". If you only need the video sequence in maximum quality but without sound - click on "Download in Max quality"</p>
                         </div>
                     </div>
                 </div>

@@ -41,20 +41,18 @@ def bootstrap_page(request):
             yt_object = TubeFox(data['yt_link'])
             return render(request, 'bootstrap.html',
                           {'title': yt_object.title,
-                           'description': yt_object.description,
-                           'keywords': yt_object.keywords,
                            'download_video': yt_object.app_collected_data.collect_video_links()
                            [max(yt_object.app_collected_data.collect_video_links().keys())],
                            'download_muted_video': yt_object.app_collected_data.collect_muted_video_links()
                            [max(yt_object.app_collected_data.collect_muted_video_links().keys())],
                            'download_thumbnail': yt_object.web_collected_data.collect_thumbnail_links()
                            [max(yt_object.web_collected_data.collect_thumbnail_links().keys())],
-                           'download_audio': yt_object.app_collected_data.collect_audio_links()
-                           [max(yt_object.app_collected_data.collect_audio_links().keys())],
+                           'status': 'ok'
                            }
                           )
         except:
-            return render(request, 'bootstrap.html')
+            return render(request, 'bootstrap.html',
+                          {'status': 'no info'})
     elif request.method == "GET":
         return render(request, 'bootstrap.html')
 
@@ -131,10 +129,12 @@ def thumbnail_page(request):
             return render(request, 'thumbnail.html',
                           {'title': yt_object.title,
                            'download_thumbnail': yt_object.web_collected_data.collect_thumbnail_links()
-                           [max(yt_object.web_collected_data.collect_thumbnail_links().keys())]}
+                           [max(yt_object.web_collected_data.collect_thumbnail_links().keys())],
+                           'status': 'ok'}
                           )
         except:
-            return render(request, 'thumbnail.html')
+            return render(request, 'thumbnail.html',
+                          {'status': 'no info'})
     elif request.method == "GET":
         return render(request, 'thumbnail.html')
 
@@ -150,9 +150,11 @@ def subtitles_page(request):
             subtitles_list = list(all_subtitles.items())
 
             return render(request, 'subtitles.html', {'title': yt_object.title,
-                                                      'subtitles_list': subtitles_list})
+                                                      'subtitles_list': subtitles_list,
+                                                        'status': 'ok'})
         except:
-            return render(request, 'subtitles.html')
+            return render(request, 'subtitles.html',
+                          {'status': 'no info'})
     elif request.method == "GET":
         return render(request, 'subtitles.html')
 
@@ -209,10 +211,12 @@ def audio_page(request):
                            'download_thumbnail': yt_object.web_collected_data.collect_thumbnail_links()
                            [max(yt_object.web_collected_data.collect_thumbnail_links().keys())],
                            'download_video': yt_object.app_collected_data.collect_video_links()
-                           [max(yt_object.app_collected_data.collect_video_links().keys())]}
+                           [max(yt_object.app_collected_data.collect_video_links().keys())],
+                           'status': 'ok'}
                           )
         except:
-            return render(request, 'audio.html')
+            return render(request, 'audio.html',
+                          {'status': 'no info'})
     elif request.method == "GET":
         return render(request, 'audio.html')
 
