@@ -59,15 +59,15 @@
 
     {% if request.method == "POST" %}
         {% if status == "ok" %}
-        <div class="container-flex" style="background: aliceblue">
+        <div class="container-flex">
         <div class="col-8 mx-auto" style="margin-bottom: 40px">
             <div class="d-flex justify-content-center align-items-center" style="margin-bottom: 20px">
                 <form method="POST" action="{% url 'download_thumbnail' %}">
                     <input type="hidden" name="thumbnail_link" value="{{ download_thumbnail }}">
-                    <button class="class="btn btn-primary btn-lg type="submit">Download</button>
+                    <button class="btn btn-primary btn-lg" type="submit">Download thumbnail</button>
                     {% csrf_token %}
                 </form>
-{#                <button type="button" class="btn btn-primary btn-lg">Download thumbnail</button>#}
+
             </div>
             <div id="carouselExample" class="carousel slide">
               <div class="carousel-inner">
