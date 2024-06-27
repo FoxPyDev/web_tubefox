@@ -80,9 +80,9 @@
                                 <div class="button-container">
                                     <form method="POST" action="{% url 'download_audio' %}">
                                         {% csrf_token %}
-                                        <input type="hidden" name="download_video" value="{{ download_video }}">
+                                        <input type="hidden" name="download_audio" value="{{ download_audio }}">
                                         <button class="btn btn-primary " type="submit">
-                                            Download MP3
+                                            Download OPUS
                                         </button>
                                     </form>
                                 </div>
